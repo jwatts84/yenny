@@ -1,0 +1,40 @@
+<div class="bg-white p-8 rounded-lg shadow-lg w-1/4 mx-5">
+    <h2 class="text-2xl font-bold mb-6">Update case</h2>
+    <form 
+    hx-post="{% url 'x_case_div_update' case.id %}" 
+    hx-target="#all" 
+    hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        <div class="mb-4">
+            {{ form.insurer.label_tag }}
+            {{ form.insurer }}
+        </div>
+        <div class="mb-4">
+            {{ form.insurer_ref.label_tag }}
+            {{ form.insurer_ref }}
+        </div>
+        <div class="mb-4">
+            {{ form.client.label_tag }}
+            {{ form.client }}
+        </div>
+        <div class="mb-4">
+            {{ form.client_ref.label_tag }}
+            {{ form.client_ref }}
+        </div>
+        <div class="mb-4">
+            {{ form.claimant.label_tag }}
+            {{ form.claimant }}
+        </div>
+        <div class="mb-4">
+            {{ form.insured.label_tag }}
+            {{ form.insured }}
+        </div>
+        <div class="mb-4">
+            {{ form.case_type.label_tag }}
+            {{ form.case_type }}
+        </div>
+        
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
+    </form>
+</div>

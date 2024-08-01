@@ -1,0 +1,38 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+</head>
+<body>
+        <!-- Navbar -->
+        <header class="bg-white text-gray-800 px-4 py-3 shadow">
+            <div class="container mx-auto flex items-center justify-between">
+    
+            <div class="flex items-center">
+                <a href="/" class="bg-custom-green text-white py-1 px-4 rounded font-bold">Investigations Portal</a>
+            </div>
+    
+            <div>
+                <a href="#" class="text-gray-800 hover:text-green-500 mr-4">Workers Comp</a>
+                <a href="/blog" class="text-gray-800 hover:text-green-500 mr-4">CTP</a>
+                <a href="/" class="bg-custom-green text-white py-1 px-4 rounded">Add new file</a>
+                
+            </div>
+            </div>
+        </header>
+            <!-- end navbar -->
+        
+        {% block content %}{% endblock %}
+
+        <!-- scripts -->
+        <script src="https://unpkg.com/htmx.org@2.0.1"></script>
+
+</body>
+</html>
