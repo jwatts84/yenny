@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, HttpResponse, get_object_or_404
 from .forms import ContactForm, EmailForm, CaseForm
 from .models import Contact,Case
 from clicksend_comms.utils import send_clicksend_sms_message
-from .utils import contact_sms_message
+from .utils import contact_sms_message, email_content
 
 # this is the case homepage
 def case_home(request, case_id):
@@ -149,7 +149,35 @@ def contact_sms(request, contact_id):
     else:
         context = {'contact':contact, 'contacts':contacts}
         return render(request, 'x_contact_div_sms.html', context)
+    
+def contact_email(request, contact_id):
+
+    contact = get_object_or_404(Contact,id=contact_id)
+    case = contact.case
+    contacts = Contact.objects.all()
+    form = ContactForm()
+
+    if request.method == "POST":
+        context = {'contacts':contacts}
+        return render(request, 'x_contact_div_original.html', context)
+
+    else:
+        context = {'contact':contact, 'contacts':contacts}
+        return render(request, 'x_contact_div_email.html', context)
         
+
+def email_content(request):
+
+
+    type = request.POST["type"]
+
+    message = email_content(type)
+
+    return render(request, 'partial_email_body')
+
+
+
+
 
 
 

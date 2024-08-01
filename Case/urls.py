@@ -14,6 +14,9 @@ urlpatterns = [
 
     # communication
     path('contact/sms/<int:contact_id>', views.contact_sms, name="x_contact_div_sms"),
+    path('contact/email/<int:contact_id>', views.contact_email, name="x_contact_div_email"),
+    path('contact/email_content', views.email_content, name="x_email_content"),
+
 ]
 
 
