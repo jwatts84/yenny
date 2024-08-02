@@ -1,9 +1,9 @@
 <div class="bg-white p-8 rounded-lg shadow-lg w-1/4 mx-5">
-    <h2 class="text-2xl font-bold mb-6">Send {{contact.first_name}} an sms</h2>
+    <h2 class="text-2xl font-bold mb-6">Send {{contact.first_name}} an email</h2>
     <form 
     hx-post="{% url 'x_contact_div_email' contact.id%}" 
     hx-target="#all" 
-
+    hx-trigger="submit"
     hx-swap="outerHTML"
     >
         {% csrf_token %}
@@ -12,18 +12,20 @@
         </div>
         <div class="mb-4">
             <select name="email_type"
-            hx-get="{% url 'x_email_content'%}" 
+            hx-get="{% url 'x_email_content' contact.id %}" 
             hx-target="#email-text-area" 
             hx-trigger = "change"
             class="form-select block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                <option value="wc_witness_callback">Initial Contact Insured</option>
+                <option value="none">---Select an option----</option>
+                <option value="wc_claimant_callback">Contact Claimant</option>
                 <option value="wc_witness_callback">Contact Witness</option>
             </select>
 
         </div>
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Get Email</button>
+        {% include 'partial_email_body.html' %}
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Mark email as sent</button>
 
     </form>
-    {% include 'partial_email_body.html' %}
+
 
 </div>

@@ -31,7 +31,7 @@ class Case(models.Model):
 
 
 class Contact(models.Model):
-    case = models.ForeignKey(Case, on_delete=models.CASCADE,related_name='contacts')
+    case = models.ForeignKey(Case, on_delete=models.CASCADE,related_name='contact')
     CONTACT_TYPE_CHOICES = [
     ('Claimant', 'Claimant'),
     ('Insured', 'Insured'),
@@ -54,8 +54,9 @@ class Contact(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 class Note(models.Model):
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     note = models.TextField()
-    date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.note[:50]  

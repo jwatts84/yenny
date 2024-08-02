@@ -3,7 +3,7 @@
     <form 
     hx-post="{% url 'x_contact_div_sms' contact.id%}" 
     hx-target="#all" 
-
+    hx-confirm="Confirm you want to send sms?"
     hx-swap="outerHTML"
     >
         {% csrf_token %}
