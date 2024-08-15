@@ -1,0 +1,35 @@
+<div class="bg-white p-8 rounded-lg shadow-lg w-1/4 mx-5">
+    <h2 class="text-2xl font-bold mb-6">Create new contact</h2>
+    <form 
+    hx-post="{% url 'x_contact_div_original' case_id%}" 
+    hx-target="#all" 
+    hx-swap="outerHTML"
+    >
+        {% csrf_token %}
+        <div class="mb-4">
+            {{ form.type.label_tag }}
+            {{ form.type }}
+        </div>
+        <div class="mb-4">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+        </div>
+        <div class="mb-4">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+        </div>
+        <div class="mb-4">
+            {{ form.phone.label_tag }}
+            {{ form.phone }}
+        </div>
+        <div class="mb-4">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="mb-4">
+            {{ form.address.label_tag }}
+            {{ form.address }}
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
+    </form>
+</div>

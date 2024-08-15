@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    {% for case_info in case_data %}
+        <div class="mb-8 bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="bg-blue-600 text-white px-6 py-4">
+                <h2 class="text-2xl font-bold">Case: {{ case_info.case.claimant }} - {{ case_info.case.insurer }}</h2>
+                <h3 class="text-xl mt-2">Client: {{ case_info.case.client }}</h3>
+            </div>
+            
+            <div class="p-6">
+                {% for contact_info in case_info.contacts %}
+                    <div class="mb-6 last:mb-0">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2">
+                            Contact: {{ contact_info.contact.first_name }} {{ contact_info.contact.last_name }}
+                            <span class="text-gray-600 ml-2">({{ contact_info.contact.type }})</span>
+                        </h4>
+                        <ul class="list-disc list-inside space-y-2">
+                            {% for note in contact_info.notes %}
+                                <li class="text-gray-700">
+                                    <span class="font-medium">{{ note.created_at|date:"Y-m-d H:i" }}</span> - {{ note.note }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

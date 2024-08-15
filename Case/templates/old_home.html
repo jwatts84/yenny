@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load compress %}
+
+
+
+
+{% block content %}
+
+<main>
+    <div class="container mx-auto py-20">
+
+      <!-- Start of Big Green Card -->
+        <div class="bg-custom-dark-green rounded-lg shadow-lg p-8">
+            <h1 class="text-5xl font-bold mb-8 text-center text-white">Investigation<span class="text-custom-green"> management </span> system</h1>
+            <h3 class="text-2xl font-bold mb-8 text-center text-white">Search by claimant name:</h1>
+
+            <!-- Search bar -->
+            <div class="flex justify-center mb-8">
+            <div class="relative w-1/2">
+                <input type="text" placeholder="Search for file or witness" class="w-full py-3 pl-4 pr-20 rounded-full shadow-md">
+                <button class="absolute right-0 top-0 bottom-0 bg-white text-green-500 px-6 rounded-r-full">
+                
+                </button>
+            </div>
+            </div>
+
+
+            <!-- Services Cards in Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+                {% for service in services %}               
+                <div class="bg-white rounded-lg p-4 text-center hover:bg-gray-300" style="border-left: 6px solid #1DBF73;">
+                        <a href="{{service.url}}">
+                            <div>
+                                <!-- <img src="{% static 'image/briefcase.svg' %}" alt="Briefcase icon"> -->
+                                <!-- <img src="https://via.placeholder.com/50x50.png?text=Code" class="inline-block h-8 mb-2" alt="Programming & Tech"> -->
+                                <div>{{ service.service_title }}</div>
+                                
+                            </div>
+                        </a>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+  </main>
+  
+
+
+
+{% endblock %}

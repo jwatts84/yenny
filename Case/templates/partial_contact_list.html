@@ -1,0 +1,75 @@
+<div id="contact-list" class="mb-5">
+    <table class="min-w-full bg-white rounded-lg shadow-md">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Type</th>
+                <th class="py-2 px-4 border-b">First Name</th>
+                <th class="py-2 px-4 border-b">Last Name</th>
+                <th class="py-2 px-4 border-b">Phone</th>
+                <th class="py-2 px-4 border-b">Email</th>
+                <th class="py-2 px-4 border-b">Address</th>
+                <th class="py-2 px-4 border-b">SMS</th>
+                <th class="py-2 px-4 border-b">Email</th>
+                <th class="py-2 px-4 border-b">Note</th>
+                <th class="py-2 px-4 border-b">Edit</th>
+                <th class="py-2 px-4 border-b">Delete</th>
+            </tr>
+        </thead>
+        <tbody class="mt-5">
+            {% for contact in contacts %}
+                <tr >
+                    <td class="py-2 px-4 border-b">{{ contact.get_type_display }}</td>
+                    <td class="py-2 px-4 border-b">{{ contact.first_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ contact.last_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ contact.phone }}</td>
+                    <td class="py-2 px-4 border-b">{{ contact.email }}</td>
+                    <td class="py-2 px-4 border-b">{{ contact.address }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <button
+                        hx-target="#all" 
+                        hx-swap="outerHTML"
+                        hx-get="{% url 'x_contact_div_sms' contact.id %}"
+                        class="text-custom-green hover:underline focus:outline-none">SMS</button>
+                
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <button
+                        hx-target="#all" 
+                        hx-swap="outerHTML"
+                        hx-get="{% url 'x_contact_div_email' contact.id %}"
+                        class="text-custom-brown hover:underline focus:outline-none">Email</button>
+                
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <button
+                        hx-target="#all" 
+                        hx-swap="outerHTML"
+                        hx-get="{% url 'x_contact_div_note' contact.id %}"
+                        class="text-yellow-500 hover:underline focus:outline-none">Note</button>
+                
+                    </td>
+                    <td class="py-2 px-4 border-b">
+
+                            <button
+                            hx-target="#all" 
+                            hx-swap="outerHTML"
+                            hx-get="{% url 'x_contact_div_update' contact.id %}"
+                            class="text-blue-500 hover:underline focus:outline-none">Edit</button>
+                    
+                    </td>
+                    <td>
+                    <button 
+                            hx-target="#all" 
+                            hx-swap="outerHTML"
+                            hx-get="{% url 'x_contact_delete' contact.id %}"
+                            class="text-red-500 hover:underline focus:outline-none">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+

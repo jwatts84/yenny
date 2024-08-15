@@ -1,0 +1,47 @@
+<div id="case-list" class="mb-5">
+    <table class="min-w-full bg-white rounded-lg shadow-md">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Claimant</th>
+                <th class="py-2 px-4 border-b">Insured</th>
+                <th class="py-2 px-4 border-b">Insurer</th>
+                <th class="py-2 px-4 border-b">Client</th>
+                <th class="py-2 px-4 border-b">Case Type</th>
+                <th class="py-2 px-4 border-b">Insurer Ref</th>
+                <th class="py-2 px-4 border-b">Client Ref</th>
+                <th class="py-2 px-4 border-b">View</th>
+                <th class="py-2 px-4 border-b">Edit</th>
+                <th class="py-2 px-4 border-b">Delete</th>
+            </tr>
+        </thead>
+        <tbody class="mt-5">
+            {% for case in cases %}
+                <tr>
+                    <td class="py-2 px-4 border-b">{{ case.claimant }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.insured }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.insurer }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.client }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.get_case_type_display }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.insurer_ref }}</td>
+                    <td class="py-2 px-4 border-b">{{ case.client_ref }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <a href = "{% url 'case_home' case.id %}">
+                        <button
+                        class="text-green-500 hover:underline focus:outline-none">View</button>
+                        </a>
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <button
+                        hx-target="#all" 
+                        hx-swap="outerHTML"
+                        hx-get="{% url 'x_case_div_update' case.id %}"
+                        class="text-blue-500 hover:underline focus:outline-none">Edit</button>
+                    </td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
