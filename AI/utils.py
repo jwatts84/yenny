@@ -10,40 +10,42 @@ from .workers_comp_few_shots import work_comp_examples
 # chatgptgit
 # llm = OpenAI(openai_api_key=api_key)
 # claude
-llm = ChatAnthropic(anthropic_api_key=claude_api_key,model="claude-3-sonnet-20240229",temperature=0)
+# llm = ChatAnthropic(anthropic_api_key=claude_api_key,model="claude-3-sonnet-20240229",temperature=0)
 
 def few_shot(orm_object,input_data):
 
-    my_data = input_data
-    template = """Exmaple: <input>{input}</input>\n\n
-        <output>{output}</output>"""
+    pass
 
-    examples = work_comp_examples
+    # my_data = input_data
+    # template = """Exmaple: <input>{input}</input>\n\n
+    #     <output>{output}</output>"""
 
-    example_prompt = PromptTemplate(
-        input_variables=["input", "output"], template= template
-    )
+    # examples = work_comp_examples
 
-    prompt = FewShotPromptTemplate(
-        examples=examples,
-        example_prompt=example_prompt,
-        suffix="""</input>{my_data}<input>\n\n
-        <output></output>
-        Please also supply a copy in Spanish as well as English! :)
-        """,
-        input_variables=["my_data"],
-    )
+    # example_prompt = PromptTemplate(
+    #     input_variables=["input", "output"], template= template
+    # )
 
-    print(prompt.format(my_data=my_data))
-    chain = LLMChain(
-        llm=llm,
-        prompt = prompt,
-    )
+    # prompt = FewShotPromptTemplate(
+    #     examples=examples,
+    #     example_prompt=example_prompt,
+    #     suffix="""</input>{my_data}<input>\n\n
+    #     <output></output>
+    #     Please also supply a copy in Spanish as well as English! :)
+    #     """,
+    #     input_variables=["my_data"],
+    # )
 
-    result = chain({
-        "my_data":my_data
-    })
+    # print(prompt.format(my_data=my_data))
+    # chain = LLMChain(
+    #     llm=llm,
+    #     prompt = prompt,
+    # )
 
-    print(result["text"])
+    # result = chain({
+    #     "my_data":my_data
+    # })
 
-    return(result["text"])
+    # print(result["text"])
+
+    # return(result["text"])

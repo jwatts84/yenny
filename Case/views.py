@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, HttpResponse, get_object_or_404
 from .forms import ContactForm, EmailForm, CaseForm
 from .models import Contact,Case, Note
 from clicksend_comms.utils import send_clicksend_sms_message
-from .utils import contact_sms_message, generate_email_content
+from .utils import contact_sms_message, generate_email_content, create_case_file_note_contact
 from django.utils import timezone
 from AI.models import TwoShotPrompt
 from AI.utils import few_shot
@@ -28,6 +28,8 @@ def home(request):
             
             form.save()
             cases = Case.objects.all()
+            most_recent_case = Case.objects.order_by('-id').first()
+            create_case_file_note_contact(most_recent_case)
             context = {'form':form, 'cases':cases}
             return render(request,'x_case_div_original.html', context)
         
@@ -207,7 +209,6 @@ def email_content(request, contact_id):
             }
 
         email_type = request.GET.get('email_type')
-        print(f"this is the email type : {email_type}")
         email = generate_email_content(email_type,details)
         context = {'email':email}
 
@@ -237,12 +238,6 @@ def contact_note(request, contact_id):
 
     if request.method == "POST":
         message = request.POST["note_body"]
-
-        if request.POST["type"] == "general":
-            message = f"NOTE:{contact.first_name} {contact.last_name}:" + message
-        else:
-            message = f"INSTRUCTION:" + message
-
         note = Note.objects.create(
             contact_id=contact_id,
             note=message,
@@ -284,7 +279,7 @@ def notes_by_case_and_contact(request):
         contacts = case.contact.all()
         contacts_data = []
         for contact in contacts:
-            notes = contact.note_set.all()
+            notes = contact.note_set.order_by('-id')[:2]
             contacts_data.append({
                 'contact': contact,
                 'notes': notes,
