@@ -1,6 +1,5 @@
 node_modules
 .venv
-AI/utils.py
 AI/__pycache__/*.pyc
 
 
