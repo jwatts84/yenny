@@ -1,22 +1,49 @@
-import os
 from langchain_openai import OpenAI
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts.few_shot import FewShotPromptTemplate
+from langchain_core.prompts.prompt import PromptTemplate
 from langchain.chains import LLMChain
+from langchain_anthropic import ChatAnthropic
+from .workers_comp_few_shots import work_comp_examples
 
-def langchain_two_shot(raw_prompt):
-    # Initialize the language model
-    # llm = OpenAI(api_key="your-openai-api-key")
 
-    # # Define a two-shot prompt template
-    # template = raw_prompt
 
-    # prompt = PromptTemplate(template=template)
+# chatgptgit
+# llm = OpenAI(openai_api_key=api_key)
+# claude
+llm = ChatAnthropic(anthropic_api_key=claude_api_key,model="claude-3-sonnet-20240229",temperature=0)
 
-    # # Create a chain
-    # chain = LLMChain(llm=llm, prompt=prompt)
+def few_shot(orm_object,input_data):
 
-    # # Run the chain.  Argument that gets passed in to the template if needed.
-    # result = chain.run()
-    result = "here is my result content"
-    # Return the result as JSON
-    return result
+    my_data = input_data
+    template = """Exmaple: <input>{input}</input>\n\n
+        <output>{output}</output>"""
+
+    examples = work_comp_examples
+
+    example_prompt = PromptTemplate(
+        input_variables=["input", "output"], template= template
+    )
+
+    prompt = FewShotPromptTemplate(
+        examples=examples,
+        example_prompt=example_prompt,
+        suffix="""</input>{my_data}<input>\n\n
+        <output></output>
+        Please also supply a copy in Spanish as well as English! :)
+        """,
+        input_variables=["my_data"],
+    )
+
+    print(prompt.format(my_data=my_data))
+    chain = LLMChain(
+        llm=llm,
+        prompt = prompt,
+    )
+
+    result = chain({
+        "my_data":my_data
+    })
+
+    print(result["text"])
+
+    return(result["text"])
