@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name = "homepage"),
     path('case/', include('Case.urls')),
+    path('google/', include('google_comms.urls')),
 
 ]
 

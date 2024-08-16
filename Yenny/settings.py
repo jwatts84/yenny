@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'AI',
     'clicksend_comms',
+    'google_comms',
     'Case',
     'django.contrib.admin',
     'django.contrib.auth',
