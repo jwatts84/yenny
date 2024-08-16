@@ -8,7 +8,7 @@ from .utils import build_service
 
 def oauth2_start(request):
     flow = Flow.from_client_secrets_file(
-        'client_secret.json',
+        'google_client_secret.json',
         scopes=['https://www.googleapis.com/auth/contacts'],
         redirect_uri=request.build_absolute_uri(reverse('oauth2_callback'))
     )
@@ -18,15 +18,18 @@ def oauth2_start(request):
 
 def oauth2_callback(request):
     state = request.session['state']
+
+
     flow = Flow.from_client_secrets_file(
-        'client_secret.json',
+        'google_client_secret.json',
         scopes=['https://www.googleapis.com/auth/contacts'],
         state=state,
         redirect_uri=request.build_absolute_uri(reverse('oauth2_callback'))
     )
+    # seems to need HTTPS request for it to work ok
     flow.fetch_token(authorization_response=request.build_absolute_uri())
     credentials = flow.credentials
-    
+
     # Save credentials to the database
     UserCredentials.objects.update_or_create(
         user=request.user,
@@ -45,11 +48,15 @@ def oauth2_callback(request):
 
 
 def create_contact(request):
+
+    try:
+        user_credentials = UserCredentials.objects.get(user=request.user)
+    
+    except:
+        return redirect('oauth2_start')
+    
     service = build_service(request.user)
-
-    if not service:
-        return redirect('oauth2_start')  # Redirect to OAuth flow if no valid credentials
-
+    
     try:
         contact = service.people().createContact(body={
             "names": [

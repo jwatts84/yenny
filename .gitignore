@@ -1,5 +1,6 @@
 node_modules
 .venv
 AI/__pycache__/*.pyc
+google_client_secret.json
 
 
